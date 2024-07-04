@@ -1,13 +1,21 @@
-{% for product in products %}
-<div>
-    <img src="{{ product.image.url }}" alt="{{ product.name }}">
-    <h2>{{ product.name }}</h2>
-    <p>{{ product.description }}</p>
-    <p>{{ product.price }}</p>
-    <form method="post" action="{% url 'cart' %}">
-        {% csrf_token %}
-        <input type="hidden" name="product_id" value="{{ product.id }}">
-        <button type="submit">Add to Cart</button>
-    </form>
+{% extends 'shop/base.html' %}
+
+{% block title %}Product List{% endblock %}
+
+{% block content %}
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+                <p class="card-text"><strong>{{ product.price }}</strong></p>
+                <button class="btn btn-primary add-to-cart" data-product-id="{{ product.id }}">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 </div>
-{% endfor %}
+{% endblock %}

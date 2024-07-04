@@ -1,7 +1,38 @@
-{% for item in items %}
-<div>
-    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
-    <h2>{{ item.product.name }}</h2>
-    <p>Quantity: {{ item.quantity }}</p>
+{% extends 'shop/base.html' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>Cart</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.get_cost }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Total Cost: {{ total_cost }}</h3>
+        <form method="post" action="{% url 'purchase' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Purchase</button>
+        </form>
+        <form method="post" action="{% url 'cancel_order' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Cancel</button>
+        </form>
+    </div>
 </div>
-{% endfor %}
+{% endblock %}
