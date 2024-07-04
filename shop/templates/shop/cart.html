@@ -1,0 +1,7 @@
+{% for item in items %}
+<div>
+    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+    <h2>{{ item.product.name }}</h2>
+    <p>Quantity: {{ item.quantity }}</p>
+</div>
+{% endfor %}
